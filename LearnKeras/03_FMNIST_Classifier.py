@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 NUM_CLASSES = 10
-BATCH_SIZE = 32
-EPOCHS = 30
+BATCH_SIZE = 64
+EPOCHS = 25
 IMAGE_SIZE = (28,28)
 
 (X_train, y_train),(X_test, y_test) = fashion_mnist.load_data()
@@ -61,7 +61,7 @@ model.add(Dropout(0.5))
 model.add(Dense(NUM_CLASSES, activation="softmax"))
 
 model.compile(optimizer=Adam(lr=0.002), loss='categorical_crossentropy', metrics=['accuracy'])
-model_history = model.fit(X_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=1, validation_data=(X_test, y_test), callbacks=[EarlyStopping(monitor='accuracy',patience=4,mode=max)])
+model_history = model.fit(X_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=1, validation_data=(X_test, y_test), callbacks=[EarlyStopping(monitor='acc',min_delta=0.001, patience=3,mode=max)])
 
 evaluated_result = model.evaluate(X_test, y_test, batch_size=BATCH_SIZE, verbose=0)
 print("\n\nTest accuracy: ", evaluated_result[1], "\nTest loss: ", evaluated_result[0])
