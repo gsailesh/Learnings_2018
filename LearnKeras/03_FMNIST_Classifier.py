@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 NUM_CLASSES = 10
-BATCH_SIZE = 64
+BATCH_SIZE = 128
 EPOCHS = 25
 IMAGE_SIZE = (28,28)
 
@@ -67,6 +67,6 @@ evaluated_result = model.evaluate(X_test, y_test, batch_size=BATCH_SIZE, verbose
 print("\n\nTest accuracy: ", evaluated_result[1], "\nTest loss: ", evaluated_result[0])
 
 epoch_list = list(range(1,len(model_history.history['acc'])+1))
-plt.plot(epoch_list, model_history.history['acc'], epoch_list, model_history['val_accs'])
-plt.legend(['Training_accuracy', 'Validation_accuracy'])
-plt.show()
+# plt.plot(epoch_list, model_history.history['acc'], epoch_list, model_history['val_accs'])
+# plt.legend(['Training_accuracy', 'Validation_accuracy'])
+# plt.show()
