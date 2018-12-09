@@ -32,11 +32,13 @@ EPOCHS = 5
 '''
 preprocess_mnist:
 
-Expects input data and image dimensions as args
+Expected args:
+X,y as arrays; including batch dimension
+dims: image dimensions
 
-Reshapes the input data (X) to the a vector of length equal to the product of image dimensions
-Normalizes the image input array to (0,1) range and converts it as float32 type
-The input label is converted into Categorical form
+Input data (X) is reshaped by vectorizing it as the product of image dimensions
+Image input array is normalized to (0,1) range of type float32
+The input label (y) is converted into Categorical form
 
 '''
 def preprocess_mnist(X, y, dims):
@@ -44,7 +46,7 @@ def preprocess_mnist(X, y, dims):
     X_len = X.shape[0]
     y_len = y.shape[0]
 
-    X = X.reshape((X_len, dims[0] * dims[1]))
+    X = X.reshape((X_len, dims[0] * dims[1])) # reshapes into (N,784)
     
     X = X.astype('float32') / 255
     y = to_categorical(y)
@@ -59,7 +61,7 @@ Designing the NeuralNet architecture using Sequential Model API
 '''
 
 model = Sequential()
-model.add(Dense(units=512,activation='relu',input_shape=(im_dims[0]*im_dims[1],)))
+model.add(Dense(units=512,activation='relu',input_shape=(im_dims[0] * im_dims[1],))) # `input_shape` should be vectorized. i.e., (28*28,) = (784,)
 model.add(Dense(units=10,activation='softmax'))
 
 model.compile(optimizer = Adam(lr=0.002),loss='categorical_crossentropy',metrics=['accuracy'])
