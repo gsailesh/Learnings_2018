@@ -1,3 +1,18 @@
+'''
+Basic MNIST classifier
+
+Imports
+--------
+mnist - dataset from keras.datasets
+Sequential Model is used for the NeuralNet architecture
+Adam Optimizer is used along with Categorical Crossentropy for Loss calculation
+
+The Dataset is in the form:
+X_train (Image features), y_train (Label)
+
+'''
+
+
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense
@@ -14,6 +29,16 @@ EPOCHS = 5
 (X_train, y_train),(X_test, y_test) = mnist.load_data()
 # print(X_train.shape)
 
+'''
+preprocess_mnist:
+
+Expects input data and image dimensions as args
+
+Reshapes the input data (X) to the a vector of length equal to the product of image dimensions
+Normalizes the image input array to (0,1) range and converts it as float32 type
+The input label is converted into Categorical form
+
+'''
 def preprocess_mnist(X, y, dims):
     
     X_len = X.shape[0]
@@ -28,6 +53,10 @@ def preprocess_mnist(X, y, dims):
 
 X_train_norm, y_train_norm = preprocess_mnist(X_train, y_train, im_dims)
 X_test_norm, y_test_norm = preprocess_mnist(X_test, y_test, im_dims)
+
+'''
+Designing the NeuralNet architecture using Sequential Model API
+'''
 
 model = Sequential()
 model.add(Dense(units=512,activation='relu',input_shape=(im_dims[0]*im_dims[1],)))
